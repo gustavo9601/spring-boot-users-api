@@ -1,5 +1,8 @@
 package com.example.springbootusersappapi.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 public class User {
     private String nickName;
     private String username;

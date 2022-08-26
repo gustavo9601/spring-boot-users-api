@@ -2,6 +2,7 @@ package com.example.springbootusersappapi.controllers;
 
 import com.example.springbootusersappapi.models.Role;
 import com.example.springbootusersappapi.services.RoleService;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class RoleController {
     private RoleService roleRepository;
 
     @GetMapping
+    @Timed(value = "get-all-roles-timer") // nombre de la metrica
     public ResponseEntity<List<Role>> getRoles() {
         return new ResponseEntity<List<Role>>(this.roleRepository.getRoles(), HttpStatus.OK);
     }

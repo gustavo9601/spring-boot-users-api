@@ -2,6 +2,9 @@ package com.example.springbootusersappapi.controllers;
 
 import com.example.springbootusersappapi.models.User;
 import com.example.springbootusersappapi.services.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/{username}")
+    @ApiOperation(value = "Obtiene un usuario por su nombre de usuario", response = User.class) // Swagger
+    @ApiResponses(value = { // Configuracion de Swagger con posibles respuestas
+            @ApiResponse(code = 200, message = "Usuario encontrado"),
+            @ApiResponse(code = 404, message = "Usuario no encontrado")
+    })
     public ResponseEntity<User> getUserByUsername(@PathVariable(value = "username") String username) {
         return new ResponseEntity<User>(this.userService.getUserByUsername(username), HttpStatus.OK);
     }

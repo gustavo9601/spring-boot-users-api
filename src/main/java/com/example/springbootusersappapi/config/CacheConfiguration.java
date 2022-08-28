@@ -8,6 +8,7 @@ import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 @Configuration
 @EnableCaching
+@ComponentScan
 public class CacheConfiguration {
 
     @Bean
@@ -31,8 +33,8 @@ public class CacheConfiguration {
 
         Map<String, CacheConfig> cacheConfig = new HashMap<>();
         // Indices de cache
-        cacheConfig.put("users", new CacheConfig());
-        cacheConfig.put("roles", new CacheConfig());
+        cacheConfig.put("users", new CacheConfig(24*60*1000, 12*60*1000));
+        cacheConfig.put("roles", new CacheConfig(24*60*1000, 12*60*1000));
         return new RedissonSpringCacheManager(redissonClient, cacheConfig);
 
     }

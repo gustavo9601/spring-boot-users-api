@@ -49,5 +49,13 @@ public class Usuario {
         this.perfil = perfil;
     }
 
-
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", perfil=" + perfil +
+                '}';
+    }
 }

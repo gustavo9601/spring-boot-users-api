@@ -1,12 +1,19 @@
 package com.example.springbootusersappapi.models;
 
-import org.springframework.context.annotation.Profile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "direcciones")
-public class Direccion {
+public class Direccion implements Serializable {
+
+    // Id serializable
+    private static final long serialVersionUID = 1L;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +23,13 @@ public class Direccion {
     private String number;
     private String city;
 
+    /*
+     * Un perfil tiene muchas direcciones
+     * */
     @ManyToOne
-    private Perfil profile;
+    @JoinColumn(name = "perfil_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ignorando atributos
+    private Perfil perfil; // creara columna perfil_id en tabla direcciones
 
     public Long getId() {
         return id;
@@ -51,11 +63,22 @@ public class Direccion {
         this.city = city;
     }
 
-    public Perfil getProfile() {
-        return profile;
+    public Perfil getPerfil() {
+        return perfil;
     }
 
-    public void setProfile(Perfil profile) {
-        this.profile = profile;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
+    @Override
+    public String toString() {
+        return "Direccion{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", number='" + number + '\'' +
+                ", city='" + city + '\'' +
+                ", perfil=" + perfil +
+                '}';
     }
 }

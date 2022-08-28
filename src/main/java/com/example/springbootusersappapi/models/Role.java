@@ -1,10 +1,11 @@
 package com.example.springbootusersappapi.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +28,7 @@ public class Role {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    // Id serializable
+    private static final long serialVersionUID = 1L;
 }

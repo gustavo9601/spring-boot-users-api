@@ -2,8 +2,9 @@ package com.example.springbootusersappapi.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
     private String nickName;
     private String username;
     private String password;
@@ -40,4 +41,8 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+    // Id serializable
+    private static final long serialVersionUID = 1L;
 }

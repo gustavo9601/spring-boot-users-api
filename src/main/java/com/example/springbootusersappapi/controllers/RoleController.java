@@ -4,10 +4,12 @@ import com.example.springbootusersappapi.models.Role;
 import com.example.springbootusersappapi.services.RoleService;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.Cacheable;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -44,6 +46,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "roles", allEntries = true) // Borrara el cache cuando se ejecute
     public ResponseEntity<Void> deleteRole(@PathVariable Long id) {
         this.roleRepository.deleteRole(id);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

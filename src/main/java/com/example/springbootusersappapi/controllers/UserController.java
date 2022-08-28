@@ -5,16 +5,21 @@ import com.example.springbootusersappapi.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.Cacheable;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserController {
+
+
     @Autowired
     private UserService userService;
 
@@ -33,7 +38,10 @@ public class UserController {
         return new ResponseEntity<User>(this.userService.getUserByUsername(username), HttpStatus.OK);
     }
 
+
     @GetMapping(value = "/params")
+    // Response container // indica el agrupador del objeto
+    @ApiOperation(value = "Obtiene lista de usuarios si empieza por el nombre", response = User.class, responseContainer = "List")
     public ResponseEntity<List<User>> getUserStartWithNickName(@RequestParam(value = "startWith", required = false) String startWith) {
         return new ResponseEntity<List<User>>(this.userService.getUserStartWithNickName(startWith), HttpStatus.OK);
     }
